@@ -1,7 +1,11 @@
 class PostsController < ApplicationController
 
   def index
-    render json: Post.all
+    @posts = Post.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @posts}
+    end
   end
 
   def show
@@ -25,8 +29,8 @@ class PostsController < ApplicationController
     render json: "destroyed"
   end
 
-private
-    def post_params
-      params.require(:post).permit(:title, :author, :intro, :extended, :published_at)
-    end
+  private
+  def post_params
+    params.require(:post).permit(:title, :author, :intro, :extended, :published_at)
+  end
 end
